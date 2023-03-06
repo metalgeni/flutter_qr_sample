@@ -12,7 +12,7 @@ class PageSetting extends StatelessWidget {
     final notifier = context.watch<UIChangeNotifier>();
     final isUseSytemSet = notifier.isUseSytemSet;
 
-    MGAppState? parent = context.findAncestorStateOfType<MGAppState>();
+    final MGAppState? parent = context.findAncestorStateOfType<MGAppState>();
 
     return PlatformScaffold(
         appBar: PlatformAppBar(title: Text('설정')),
@@ -24,9 +24,11 @@ class PageSetting extends StatelessWidget {
               ListTile(
                 title: Row(
                   children: [
-                    Text(
-                      '시스템설정 UI 사용',
-                    ),
+                    Expanded(
+                        flex: 5,
+                        child: Text(
+                          '시스템설정 UI 사용',
+                        )),
                     Spacer(),
                     Switch(
                       //value: parent!.useLightMode,
@@ -43,9 +45,11 @@ class PageSetting extends StatelessWidget {
               ListTile(
                 title: Row(
                   children: [
-                    Text(
-                      '라이트/다크',
-                    ),
+                    Expanded(
+                        flex: 5,
+                        child: Text(
+                          '라이트/다크',
+                        )),
                     Spacer(),
                     Switch(
                       //value: parent!.useLightMode,
@@ -63,29 +67,11 @@ class PageSetting extends StatelessWidget {
               ListTile(
                 title: Row(
                   children: [
-                    Text(
-                      'iOS/Android 스타일 UI',
-                    ),
-                    Spacer(),
-                    Switch(
-                      //value: parent!.useLightMode,
-                      value: true,
-                      //activeColor: Colors.red,
-                      onChanged: isUseSytemSet
-                          ? null
-                          : (bool value) {
-                              //parent.handleBrightness(value);
-                            },
-                    ),
-                  ],
-                ),
-              ),
-              ListTile(
-                title: Row(
-                  children: [
-                    Text(
-                      '시스템 글꼴 크기 사용',
-                    ),
+                    Expanded(
+                        flex: 5,
+                        child: Text(
+                          'iOS/Android 스타일 UI',
+                        )),
                     Spacer(),
                     Switch(
                       //value: parent!.useLightMode,
@@ -105,10 +91,11 @@ class PageSetting extends StatelessWidget {
                   children: [
                     Text(
                       '글꼴 크기',
+                      overflow: TextOverflow.ellipsis,
                     ),
                     PlatformSlider(
-                      min: 0,
-                      max: 10,
+                      min: 0.8,
+                      max: 4.0,
                       divisions: 8,
                       //onChanged: (_) {},
                       onChanged: isUseSytemSet
@@ -116,7 +103,7 @@ class PageSetting extends StatelessWidget {
                           : (double value) {
                               //parent.handleBrightness(value);
                             },
-                      value: 0.5,
+                      value: 1.0,
                     ),
                   ],
                 ),

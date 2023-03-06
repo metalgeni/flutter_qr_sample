@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_homework/define/define_global.dart';
@@ -20,35 +22,78 @@ class MGApp extends StatefulWidget {
 }
 
 class MGAppState extends State<MGApp> {
+  static late ThemeData materialTheme;
+  static late CupertinoThemeData cupertinoTheme;
+
+  static bool isUseSystemSetting = true;
+  static bool isLightMode = false;
+  static bool isCupertinoUI = false;
+  static double customTextScaleFactor = 1.0;
+
   @override
   void initState() {
     super.initState();
   }
 
-  static ThemeData updateThemes(bool useLightMode) {
-    return ThemeData(
-        colorSchemeSeed: Color(0xff6750a4),
-        brightness: useLightMode ? Brightness.light : Brightness.dark);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    var t = MediaQuery.of(context).textScaleFactor;
-    //var t2 = MediaQuery.of(context).
-
-    final materialTheme = ThemeData(
+  static updateThemes(bool _useLightMode) {
+    materialTheme = ThemeData(
+      brightness: _useLightMode ? Brightness.light : Brightness.dark,
       cupertinoOverrideTheme: CupertinoThemeData(
         primaryColor: Color(0xff127EFB),
       ),
-      //primarySwatch: Colors.blue,
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: ButtonStyle(
-          padding: MaterialStateProperty.all(EdgeInsets.all(16.0)),
+          padding: MaterialStateProperty.all(EdgeInsets.all(18.0)),
           foregroundColor:
               MaterialStateProperty.all(Color.fromARGB(255, 111, 0, 255)),
         ),
       ),
     );
+
+    cupertinoTheme =
+        MaterialBasedCupertinoThemeData(materialTheme: materialTheme);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var mediaQuery = MediaQuery.of(context);
+    var textScaleFactor = mediaQuery.textScaleFactor;
+    Brightness brightness = mediaQuery.platformBrightness;
+
+    print("textScaleFactor $textScaleFactor");
+    print("brightness $brightness");
+
+    //isLightMode = brightness == Brightness.light;
+
+    late bool isCurLightMode;
+    late bool isCurCupertino;
+    late double curtextScaleFactor;
+
+    if (isUseSystemSetting) {
+      isCurLightMode = brightness == Brightness.light;
+
+      if (kIsWeb == false) {
+        if (Platform.isAndroid) {
+          isCurCupertino = false;
+        } else {
+          isCurCupertino = true;
+        }
+      } else {
+        isCurCupertino = false;
+      }
+
+      curtextScaleFactor = textScaleFactor;
+
+      isLightMode = isCurLightMode;
+      isCupertinoUI = isCurCupertino;
+      customTextScaleFactor = textScaleFactor;
+    } else {
+      isCurLightMode = isLightMode;
+      isCurCupertino = isCupertinoUI;
+      curtextScaleFactor = customTextScaleFactor;
+    }
+
+    updateThemes(isCurLightMode);
 
     return MultiProvider(
         providers: [
@@ -57,26 +102,28 @@ class MGAppState extends State<MGApp> {
         child: Theme(
           data: materialTheme,
           child: PlatformProvider(
+            initialPlatform:
+                isCurCupertino ? TargetPlatform.iOS : TargetPlatform.android,
             settings: PlatformSettingsData(
               iosUsesMaterialWidgets: true,
               iosUseZeroPaddingForAppbarPlatformIcon: true,
             ),
             builder: (context) => PlatformApp(
-              localizationsDelegates: <LocalizationsDelegate<dynamic>>[
-                DefaultMaterialLocalizations.delegate,
-                DefaultWidgetsLocalizations.delegate,
-                DefaultCupertinoLocalizations.delegate,
-              ],
-              //themeMode: ThemeMode.system, //ThemeMode.light ,
+              builder: (context, child) {
+                return MediaQuery(
+                    data: mediaQuery.copyWith(textScaleFactor: 3.8),
+                    child: child!);
+              },
               title: 'qr demo',
               material: (_, __) => MaterialAppData(
                 theme: materialTheme,
               ),
               cupertino: (_, __) => CupertinoAppData(
-                theme: CupertinoThemeData(
-                  brightness: Brightness.light,
-                  primaryColor: Color(0xff127EFB),
-                ),
+                theme: cupertinoTheme,
+                // CupertinoThemeData(
+                //   brightness: Brightness.dark,
+                //   primaryColor: Color(0xff127EFB),
+                // ),
               ),
               initialRoute: GlobalDefine.RouteNameRoot,
               routes: {

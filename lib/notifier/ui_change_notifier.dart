@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class UIChangeNotifier with ChangeNotifier {
-  //double h = MediaQuery.of(context).textScaleFactor;
-
   bool isUseSytemSet = false;
 
   bool isDarkmode = false;
@@ -13,11 +11,7 @@ class UIChangeNotifier with ChangeNotifier {
   double fontSize = 0;
   ThemeMode themeMode = ThemeMode.system;
   Brightness brightness = Brightness.light;
-  bool isQRDetect = false;
-
-  // RefreshData(int index) async {
-  //   notifyListeners();
-  // }
+  bool isPressQRDetect = false;
 
   RefreshSystemSetting(bool _isSystemSet) {
     isUseSytemSet = _isSystemSet;
@@ -42,7 +36,7 @@ class UIChangeNotifier with ChangeNotifier {
   }
 
   RefreshUseQRDetect(bool _isQRDetect) {
-    isQRDetect = _isQRDetect;
+    isPressQRDetect = _isQRDetect;
     notifyListeners();
   }
 }

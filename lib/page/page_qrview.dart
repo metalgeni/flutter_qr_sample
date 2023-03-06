@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_homework/notifier/ui_change_notifier.dart';
@@ -32,12 +31,10 @@ class _PageQRViewState extends State<PageQRView> {
   }
 
   Widget buildCameraWidget(BuildContext context) {
-    bool isQRDetect = context.watch<UIChangeNotifier>().isQRDetect;
-    if (isQRDetect == true) {
-      print(">>>isQRDetect true");
+    bool isPressQRDetect = context.watch<UIChangeNotifier>().isPressQRDetect;
+    if (isPressQRDetect == true) {
       return Expanded(flex: 3, child: _buildQrView(context));
     } else {
-      print(">>>isQRDetect false");
       return Expanded(
           flex: 3,
           child: Container(
@@ -45,7 +42,6 @@ class _PageQRViewState extends State<PageQRView> {
               child: Text('Long press QR Detect Button')));
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
