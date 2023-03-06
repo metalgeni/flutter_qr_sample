@@ -1,48 +1,41 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_homework/define/define_global.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-
-import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:flutter_homework/page/page_qrview.dart';
-import 'package:flutter_homework/page/page_setting.dart';
 
 class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PlatformScaffold(
       appBar: PlatformAppBar(
-        title: Text('Cupertino, Material, DarkMode, QR Scan Demo'),
+        title: Text('QR Scan Demo'),
       ),
       body: ListView(
         children: [
+          const Divider(thickness: 10),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: PlatformElevatedButton(
                 child: PlatformText('설정'),
                 onPressed: () {
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //   builder: (context) => const QRViewExample(),
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //   builder: (context) => PageSetting(),
-                  // ));
                   Navigator.pushNamed(context, GlobalDefine.RouteNameSetting);
                 }),
           ),
-          Divider(thickness: 10),
+          const Divider(thickness: 10),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: PlatformElevatedButton(
-                child: PlatformText('QRCode'),
+                child: PlatformText('QRCode Detect'),
                 onPressed: () {
                   Navigator.pushNamed(context, GlobalDefine.RouteNameQR);
                 }),
           ),
-          Divider(thickness: 10),
+          const Divider(thickness: 10),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: PlatformElevatedButton(
-                child: PlatformText('PLATFORM'),
+                child: isMaterial(context)
+                    ? PlatformText('iOS Style UI')
+                    : PlatformText('Android Style UI'),
                 onPressed: () {
                   final p = PlatformProvider.of(context)!;
 
@@ -51,7 +44,7 @@ class MainPage extends StatelessWidget {
                       : p.changeToMaterialPlatform();
                 }),
           ),
-          Divider(thickness: 10),
+          const Divider(thickness: 10),
         ],
       ),
     );

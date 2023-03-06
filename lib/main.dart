@@ -25,10 +25,10 @@ class MGAppState extends State<MGApp> {
   static late ThemeData materialTheme;
   static late CupertinoThemeData cupertinoTheme;
 
-  static bool isUseSystemSetting = true;
-  static bool isLightMode = false;
-  static bool isCupertinoUI = false;
-  static double customTextScaleFactor = 1.0;
+  bool isUseSystemSetting = true;
+  bool isLightMode = false;
+  bool isCupertinoUI = false;
+  double customTextScaleFactor = 1.0;
 
   @override
   void initState() {
@@ -54,6 +54,30 @@ class MGAppState extends State<MGApp> {
         MaterialBasedCupertinoThemeData(materialTheme: materialTheme);
   }
 
+  SetUseSystemSet(bool _isUseSystemSetting) {
+    setState(() {
+      isUseSystemSetting = _isUseSystemSetting;
+    });
+  }
+
+  SetLightMode(bool _isLightMode) {
+    setState(() {
+      isLightMode = _isLightMode;
+    });
+  }
+
+  SetCupertino(bool _isCupertinoUI) {
+    setState(() {
+      isCupertinoUI = _isCupertinoUI;
+    });
+  }
+
+  SetScaleFactor(double _customTextScaleFactor) {
+    setState(() {
+      customTextScaleFactor = _customTextScaleFactor;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context);
@@ -67,7 +91,7 @@ class MGAppState extends State<MGApp> {
 
     late bool isCurLightMode;
     late bool isCurCupertino;
-    late double curtextScaleFactor;
+    late double curTextScaleFactor;
 
     if (isUseSystemSetting) {
       isCurLightMode = brightness == Brightness.light;
@@ -82,7 +106,7 @@ class MGAppState extends State<MGApp> {
         isCurCupertino = false;
       }
 
-      curtextScaleFactor = textScaleFactor;
+      curTextScaleFactor = textScaleFactor;
 
       isLightMode = isCurLightMode;
       isCupertinoUI = isCurCupertino;
@@ -90,7 +114,7 @@ class MGAppState extends State<MGApp> {
     } else {
       isCurLightMode = isLightMode;
       isCurCupertino = isCupertinoUI;
-      curtextScaleFactor = customTextScaleFactor;
+      curTextScaleFactor = customTextScaleFactor;
     }
 
     updateThemes(isCurLightMode);
@@ -111,7 +135,8 @@ class MGAppState extends State<MGApp> {
             builder: (context) => PlatformApp(
               builder: (context, child) {
                 return MediaQuery(
-                    data: mediaQuery.copyWith(textScaleFactor: 3.8),
+                    data: mediaQuery.copyWith(
+                        textScaleFactor: curTextScaleFactor),
                     child: child!);
               },
               title: 'qr demo',
@@ -120,10 +145,6 @@ class MGAppState extends State<MGApp> {
               ),
               cupertino: (_, __) => CupertinoAppData(
                 theme: cupertinoTheme,
-                // CupertinoThemeData(
-                //   brightness: Brightness.dark,
-                //   primaryColor: Color(0xff127EFB),
-                // ),
               ),
               initialRoute: GlobalDefine.RouteNameRoot,
               routes: {
