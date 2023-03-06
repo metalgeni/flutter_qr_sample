@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_homework/main.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_homework/notifier/ui_change_notifier.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 class PageSetting extends StatelessWidget {
@@ -6,6 +9,11 @@ class PageSetting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final notifier = context.watch<UIChangeNotifier>();
+    final isUseSytemSet = notifier.isUseSytemSet;
+
+    MGAppState? parent = context.findAncestorStateOfType<MGAppState>();
+
     return PlatformScaffold(
         appBar: PlatformAppBar(title: Text('설정')),
         body: Column(
@@ -17,15 +25,16 @@ class PageSetting extends StatelessWidget {
                 title: Row(
                   children: [
                     Text(
-                      '라이트/다크 시스템설정 사용',
+                      '시스템설정 UI 사용',
                     ),
                     Spacer(),
                     Switch(
                       //value: parent!.useLightMode,
-                      value: true,
+                      value: isUseSytemSet,
                       //activeColor: Colors.red,
                       onChanged: (bool value) {
                         //parent.handleBrightness(value);
+                        notifier.RefreshSystemSetting(value);
                       },
                     ),
                   ],
@@ -42,9 +51,11 @@ class PageSetting extends StatelessWidget {
                       //value: parent!.useLightMode,
                       value: true,
                       //activeColor: Colors.red,
-                      onChanged: (bool value) {
-                        //parent.handleBrightness(value);
-                      },
+                      onChanged: isUseSytemSet
+                          ? null
+                          : (bool value) {
+                              //parent.handleBrightness(value);
+                            },
                     ),
                   ],
                 ),
@@ -60,9 +71,11 @@ class PageSetting extends StatelessWidget {
                       //value: parent!.useLightMode,
                       value: true,
                       //activeColor: Colors.red,
-                      onChanged: (bool value) {
-                        //parent.handleBrightness(value);
-                      },
+                      onChanged: isUseSytemSet
+                          ? null
+                          : (bool value) {
+                              //parent.handleBrightness(value);
+                            },
                     ),
                   ],
                 ),
@@ -78,9 +91,11 @@ class PageSetting extends StatelessWidget {
                       //value: parent!.useLightMode,
                       value: true,
                       //activeColor: Colors.red,
-                      onChanged: (bool value) {
-                        //parent.handleBrightness(value);
-                      },
+                      onChanged: isUseSytemSet
+                          ? null
+                          : (bool value) {
+                              //parent.handleBrightness(value);
+                            },
                     ),
                   ],
                 ),
@@ -96,7 +111,11 @@ class PageSetting extends StatelessWidget {
                       max: 10,
                       divisions: 8,
                       //onChanged: (_) {},
-                      onChanged: null,
+                      onChanged: isUseSytemSet
+                          ? null
+                          : (double value) {
+                              //parent.handleBrightness(value);
+                            },
                       value: 0.5,
                     ),
                   ],

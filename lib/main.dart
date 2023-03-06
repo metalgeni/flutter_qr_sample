@@ -16,17 +16,26 @@ class MGApp extends StatefulWidget {
   const MGApp({Key? key}) : super(key: key);
 
   @override
-  State<MGApp> createState() => _MGAppState();
+  State<MGApp> createState() => MGAppState();
 }
 
-class _MGAppState extends State<MGApp> {
+class MGAppState extends State<MGApp> {
   @override
   void initState() {
     super.initState();
   }
 
+  static ThemeData updateThemes(bool useLightMode) {
+    return ThemeData(
+        colorSchemeSeed: Color(0xff6750a4),
+        brightness: useLightMode ? Brightness.light : Brightness.dark);
+  }
+
   @override
   Widget build(BuildContext context) {
+    var t = MediaQuery.of(context).textScaleFactor;
+    //var t2 = MediaQuery.of(context).
+
     final materialTheme = ThemeData(
       cupertinoOverrideTheme: CupertinoThemeData(
         primaryColor: Color(0xff127EFB),
