@@ -22,7 +22,7 @@ class PageSetting extends StatelessWidget {
                     Expanded(
                         flex: 5,
                         child: Text(
-                          '시스템설정 UI 사용',
+                          '시스템설정 사용',
                         )),
                     Spacer(),
                     PlatformSwitch(

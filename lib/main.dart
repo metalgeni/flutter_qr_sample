@@ -87,8 +87,6 @@ class MGAppState extends State<MGApp> {
     print("textScaleFactor $textScaleFactor");
     print("brightness $brightness");
 
-    //isLightMode = brightness == Brightness.light;
-
     late bool isCurLightMode;
     late bool isCurCupertino;
     late double curTextScaleFactor;
