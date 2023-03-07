@@ -10,12 +10,13 @@ class PageSetting extends StatelessWidget {
     final MGAppState? parent = context.findAncestorStateOfType<MGAppState>();
 
     return PlatformScaffold(
+        iosContentPadding: true,
+        iosContentBottomPadding: true,
         appBar: PlatformAppBar(title: Text('설정')),
         body: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Container(height: 50),
               ListTile(
                 title: Row(
                   children: [
@@ -41,7 +42,7 @@ class PageSetting extends StatelessWidget {
                     Expanded(
                         flex: 5,
                         child: Text(
-                          '라이트/다크',
+                          '다크/라이트',
                         )),
                     Spacer(),
                     PlatformSwitch(

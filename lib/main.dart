@@ -36,8 +36,9 @@ class MGAppState extends State<MGApp> {
   }
 
   static updateThemes(bool _useLightMode) {
+    var bright = _useLightMode ? Brightness.light : Brightness.dark;
     materialTheme = ThemeData(
-      brightness: _useLightMode ? Brightness.light : Brightness.dark,
+      brightness: bright,
       cupertinoOverrideTheme: CupertinoThemeData(
         primaryColor: Color(0xff127EFB),
       ),
