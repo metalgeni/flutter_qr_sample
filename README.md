@@ -14,6 +14,7 @@ Material, Cupertino, DarkMode, QRCode Demo
     qr_code_scanner: 1.0.1
     provider: 6.0.5
 
+
 ### 폴더및 하위 모듈 목록및 설명
 
 
@@ -46,7 +47,19 @@ Material, Cupertino, DarkMode, QRCode Demo
 
 
 
+### 빌드방법
+- 터미널에서 아래와 같이 순차적으로 실행합니다.
+###
+    flutter pub get
+    flutter pub upgrade
 
+- IDE ( `VSCode`나, `안드로이드 스튜디오` ) 에서 테스트 장비를 연결하여 실행버튼을 클릭합니다.
+- 혹은 아래와 같이 실행하여 APK를 빌드합니다.
+       
+###
+    flutter build apk --split-per-abi 
 
+빌드방법의 자세한 내용은 다음 페이지를 참조 바랍니다.
+- https://flutter-ko.dev/docs/deployment/android
 
 
